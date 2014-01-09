@@ -8,7 +8,7 @@ using Winter.Web.Repository;
 
 namespace Winter.Web.Controllers
 {
-    //[Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin")]
     public class StoryController : Controller
     {
         IWinterDb db;
