@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -7,6 +8,7 @@ using Winter.Web.Repository;
 
 namespace Winter.Web.Controllers
 {
+    //[Authorize(Roles = "admin")]
     public class StoryController : Controller
     {
         IWinterDb db;
@@ -23,7 +25,10 @@ namespace Winter.Web.Controllers
         // GET: /Story2/
         public ActionResult Index()
         {
-            var stories = db.Query<Story>().Include(s => s.StoryType);
+            var stories = db.Query<Story>()
+                            .Include(s => s.StoryType)
+                            .OrderBy(s => s.StoryID);
+
             return View(stories.ToList());
         }
 
@@ -40,8 +45,9 @@ namespace Winter.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "StoryID,StoryTypeID,Title,Content,VideoURL,ImageURL,AddedDate,Rating")] Story story)
+        public ActionResult Create([Bind(Include = "StoryID,StoryTypeID,Title,Content,VideoURL,ImageURL,Rating")] Story story)
         {
+            story.AddedDate = DateTime.Now;
             if (ModelState.IsValid)
             {
                 db.Add(story);
@@ -62,7 +68,7 @@ namespace Winter.Web.Controllers
             }
 
             Story story = db.Query<Story>().FirstOrDefault(s => s.StoryID == id);
-            
+
             if (story == null)
             {
                 return HttpNotFound();

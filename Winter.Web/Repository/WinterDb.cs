@@ -11,8 +11,8 @@ namespace Winter.Web.Repository
             : base("DefaultConnection")
         { }
 
-        public DbSet<Story> Stories { get; set; }
-        public DbSet<StoryType> StoryTypes { get; set; }
+        public virtual DbSet<Story> Stories { get; set; }
+        public virtual DbSet<StoryType> StoryTypes { get; set; }
 
         IQueryable<T> IWinterDb.Query<T>()
         {

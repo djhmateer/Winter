@@ -21,5 +21,20 @@ namespace Winter.Web.Tests
                 return stories.AsQueryable();
             }
         }
+
+        public static IQueryable<StoryType> StoryTypes
+        {
+            get
+            {
+                // Create a list of 3 StoryTypes
+                var storyTypes = new List<StoryType>();
+                for (var i = 1; i <= 3; i++)
+                {
+                    var storyType = new StoryType { StoryTypeID = i, Name="asdf"+i };
+                    storyTypes.Add(storyType);
+                }
+                return storyTypes.AsQueryable();
+            }
+        }
     }
 }

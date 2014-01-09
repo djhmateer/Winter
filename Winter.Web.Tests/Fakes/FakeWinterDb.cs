@@ -9,7 +9,6 @@ namespace Winter.Web.Tests.Fakes
 {
     public class FakeWinterDb : IWinterDb
     {
-        // Interface members below
         public IQueryable<T> Query<T>() where T : class
         {
             return Sets[typeof(T)] as IQueryable<T>;

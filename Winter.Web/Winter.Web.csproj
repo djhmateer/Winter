@@ -223,7 +223,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Story\Create.cshtml" />
     <Content Include="Views\Story\Delete.cshtml" />
-    <Content Include="Views\Story\Details.cshtml" />
     <Content Include="Views\Story\Edit.cshtml" />
     <Content Include="Views\Story\Index.cshtml" />
   </ItemGroup>
