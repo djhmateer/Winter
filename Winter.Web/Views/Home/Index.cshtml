@@ -10,9 +10,9 @@
             @Html.DisplayNameFor(model => model.Rating)
         </th>
 
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Title)
-        </th>
+        </th>*@
         <th>
         </th>
         <th>
@@ -32,9 +32,9 @@
                 @Html.DisplayFor(modelItem => item.Rating)
             </td>
 
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Title)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Content)
             </td>
@@ -50,11 +50,12 @@
                 }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AddedDate)
+                @*@Html.DisplayFor(modelItem => item.AddedDate, "ShortDateTime")*@
+                @String.Format("{0:d-MMM-yy}", item.AddedDate)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.StoryType.Name)
-            </td>
+            </td>*@
 
         </tr>
     }
