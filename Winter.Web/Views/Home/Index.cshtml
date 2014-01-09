@@ -4,17 +4,12 @@
     ViewBag.Title = "British Humour";
 }
 
-@*<h2>British Humour</h2>*@
-
-@*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Rating)
         </th>
-       
+
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
@@ -26,7 +21,7 @@
             @Html.DisplayNameFor(model => model.AddedDate)
         </th>
         <th>
-           
+
         </th>
     </tr>
 
@@ -36,7 +31,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Rating)
             </td>
-            
+
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
@@ -60,8 +55,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.StoryType.Name)
             </td>
-           
+
         </tr>
     }
-
 </table>
