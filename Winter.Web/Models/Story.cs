@@ -29,6 +29,7 @@ namespace Winter.Web.Models
 
         [Required]
         [Display(Name = "Added Date")]
+        [DisplayFormat(DataFormatString = "{0:d-MMM-yy}", ApplyFormatInEditMode = true)]
         public DateTime AddedDate { get; set; }
 
         [Required]
