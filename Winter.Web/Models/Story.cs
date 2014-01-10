@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Winter.Web.Models
 {
-    public class Story
+    public class Story : IValidatableObject
     {
         public int StoryID { get; set; }
 
@@ -11,6 +11,7 @@ namespace Winter.Web.Models
         public int StoryTypeID { get; set; }
 
         [Required]
+        [StringLength(100)]
         [MaxWords(10, ErrorMessage = "10 Words or less in Title please")]
         public string Title { get; set; }
 
@@ -19,9 +20,11 @@ namespace Winter.Web.Models
         public string Content { get; set; }
 
         [Display(Name = "Video URL")]
+        [DisplayFormat(NullDisplayText = "none set")]
         public string VideoURL { get; set; }
 
         [Display(Name = "Image URL")]
+        [DisplayFormat(NullDisplayText = "none set")]
         public string ImageURL { get; set; }
 
         [Required]
@@ -31,6 +34,14 @@ namespace Winter.Web.Models
         [Required]
         [Range(0, 9999, ErrorMessage = "Rating should be in the range of 0 to 9999")]
         public int Rating { get; set; }
+
+        public System.Collections.Generic.IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (Title == "Dave")
+            {
+                yield return new ValidationResult("Sorry you can't do this Dave");
+            }
+        }
     }
 
     public class MaxWordsAttribute : ValidationAttribute
