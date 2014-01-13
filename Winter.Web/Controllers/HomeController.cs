@@ -11,8 +11,9 @@ namespace Winter.Web.Controllers
         IWinterDb db;
 
         public HomeController()
-            : this(new WinterDb())
-        { }
+        {
+            db = new WinterDb();
+        }
 
         public HomeController(IWinterDb db)
         {
