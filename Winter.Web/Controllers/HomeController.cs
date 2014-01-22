@@ -8,13 +8,9 @@ namespace Winter.Web.Controllers
 {
     public class HomeController : Controller
     {
-        IWinterDb db;
+        readonly IWinterDb db;
 
-        public HomeController()
-        {
-            db = new WinterDb();
-        }
-
+        // Unity knows that if IWinterDb interface is asked for, it will inject in a new WinterDb()
         public HomeController(IWinterDb db)
         {
             this.db = db;
@@ -32,7 +28,6 @@ namespace Winter.Web.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
             return View();
         }
     }

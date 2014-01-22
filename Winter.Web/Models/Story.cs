@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Winter.Web.Models
@@ -15,8 +16,8 @@ namespace Winter.Web.Models
         [MaxWords(10, ErrorMessage = "10 Words or less in Title please")]
         public string Title { get; set; }
 
-        [StringLength(1024)]
-        [MaxWords(100, ErrorMessage = "100 Words or less in content please - keep it short!")]
+        [StringLength(2048)]
+        [MaxWords(2000, ErrorMessage = "2000 Words or less in content please - keep it short!")]
         public string Content { get; set; }
 
         [Display(Name = "Video URL")]

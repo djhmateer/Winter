@@ -11,18 +11,13 @@ namespace Winter.Web.Controllers
     [Authorize(Roles = "admin")]
     public class StoryController : Controller
     {
-        IWinterDb db;
-
-        public StoryController()
-            : this(new WinterDb())
-        { }
+        readonly IWinterDb db;
 
         public StoryController(IWinterDb db)
         {
             this.db = db;
         }
 
-        // GET: /Story2/
         public ActionResult Index()
         {
             var stories = db.Query<Story>()
@@ -32,17 +27,14 @@ namespace Winter.Web.Controllers
             return View(stories.ToList());
         }
 
-        // GET: /Story2/Create
         public ActionResult Create()
         {
             ViewBag.StoryTypeID = new SelectList(db.Query<StoryType>(), "StoryTypeID", "Name");
 
-            return View();
+            // Passing a new Story so get default rating set as 1
+            return View(new Story {Rating = 1});
         }
 
-        // POST: /Story2/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "StoryID,StoryTypeID,Title,Content,VideoURL,ImageURL,Rating")] Story story)
@@ -59,7 +51,6 @@ namespace Winter.Web.Controllers
             return View(story);
         }
 
-        // GET: /Story2/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -77,9 +68,6 @@ namespace Winter.Web.Controllers
             return View(story);
         }
 
-        // POST: /Story2/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "StoryID,StoryTypeID,Title,Content,VideoURL,ImageURL,AddedDate,Rating")] Story story)
@@ -94,14 +82,15 @@ namespace Winter.Web.Controllers
             return View(story);
         }
 
-        // GET: /Story2/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Story story = db.Query<Story>().FirstOrDefault(s => s.StoryID == id);
+
+            var story = db.Query<Story>().FirstOrDefault(s => s.StoryID == id);
+            
             if (story == null)
             {
                 return HttpNotFound();
@@ -109,7 +98,6 @@ namespace Winter.Web.Controllers
             return View(story);
         }
 
-        // POST: /Story2/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

@@ -19,7 +19,7 @@ namespace Winter.Web.Tests.Repository
                 {
                     var result = db.Stories;
 
-                    Assert.AreEqual(3, result.Count());
+                    Assert.AreEqual(2, result.Count());
                 }
             }
 
@@ -36,7 +36,7 @@ namespace Winter.Web.Tests.Repository
 
                     var result = db.Stories;
 
-                    Assert.AreEqual(4, result.Count());
+                    Assert.AreEqual(3, result.Count());
                 }
             }
         }

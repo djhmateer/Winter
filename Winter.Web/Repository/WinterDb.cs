@@ -26,7 +26,7 @@ namespace Winter.Web.Repository
 
         void IWinterDb.Update<T>(T entity)
         {
-            Entry(entity).State = System.Data.Entity.EntityState.Modified;
+            Entry(entity).State = EntityState.Modified;
         }
 
         void IWinterDb.Remove<T>(T entity)

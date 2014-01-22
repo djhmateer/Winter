@@ -1,15 +1,13 @@
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
+using System.Data.Entity.Migrations;
+using System.Linq;
+using Winter.Web.Models;
+
 namespace Winter.Web.Migrations
 {
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
-    using Winter.Web.Models;
-    using Winter.Web.Repository;
-
-    internal sealed class Configuration : DbMigrationsConfiguration<Winter.Web.Repository.WinterDb>
+    internal sealed class Configuration : DbMigrationsConfiguration<Repository.WinterDb>
     {
         public Configuration()
         {
@@ -17,7 +15,7 @@ namespace Winter.Web.Migrations
             AutomaticMigrationDataLossAllowed = true;
         }
 
-        protected override void Seed(Winter.Web.Repository.WinterDb context)
+        protected override void Seed(Repository.WinterDb context)
         {
             // Only insert if there are none in there
             if (!context.StoryTypes.Any())

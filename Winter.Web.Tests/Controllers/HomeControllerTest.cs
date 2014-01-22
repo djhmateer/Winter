@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.Practices.Unity;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -12,7 +13,7 @@ namespace Winter.Web.Tests.Controllers
     public class HomeControllerTest
     {
         [TestMethod]
-        public void Index__ShouldReturn100Stories()
+        public void Index_GivenFake_ShouldReturn100Stories()
         {
             var db = new FakeWinterDb();
             db.AddSet(TestData.Stories);
@@ -25,7 +26,7 @@ namespace Winter.Web.Tests.Controllers
         }
 
         [TestMethod]
-        public void Index__ShouldReturnAllStoriesOrderedByRatingWithHighestFirst()
+        public void Index_GivenFake_ShouldReturnAllStoriesOrderedByRatingWithHighestFirst()
         {
             var db = new FakeWinterDb();
             db.AddSet(TestData.Stories);
@@ -40,14 +41,25 @@ namespace Winter.Web.Tests.Controllers
         }
 
         [TestMethod]
-        public void About_GivenNothing_ViewBagShouldContainMessage()
+        public void Index_GivenNothing_ResultShouldNotBeNull()
         {
-            HomeController controller = new HomeController();
+            UnityConfig.RegisterComponents(); 
+            var controller = UnityConfig.container.Resolve<HomeController>();
 
-            ViewResult result = controller.About() as ViewResult;
+            var result = controller.Index() as ViewResult;
 
-            Assert.AreEqual("Your application description page.", result.ViewBag.Message);
+            Assert.IsNotNull(result);
         }
+
+        //[TestMethod]
+        //public void About_GivenNothing_ViewBagShouldContainMessage()
+        //{
+        //    var controller = new HomeController(null);
+
+        //    var result = controller.About() as ViewResult;
+
+        //    Assert.AreEqual("Your application description page.", result.ViewBag.Message);
+        //}
     }
 
     // Integration tests depend on the test data inserted in migrations
@@ -55,59 +67,50 @@ namespace Winter.Web.Tests.Controllers
     public class HomeControllerTestsIntegration
     {
         [TestMethod]
-        public void Index_GivenNothing_ResultShouldNotBeNull()
+        public void Index_GivenNothing_ShouldReturnAListOfAll2Stories()
         {
-            HomeController controller = new HomeController();
+            UnityConfig.RegisterComponents();
+            var controller = UnityConfig.container.Resolve<HomeController>();
 
-            ViewResult result = controller.Index() as ViewResult;
+            var result = controller.Index() as ViewResult;
 
-            Assert.IsNotNull(result);
+            var model = result.Model as IEnumerable<Story>;
+
+            Assert.AreEqual(2, model.Count());
         }
 
-        [TestMethod]
-        public void Index_GivenNothing_ShouldReturnAListOfAll3Stories()
-        {
-            HomeController controller = new HomeController();
+        //    [TestMethod]
+        //    public void Index__FirstStorySpikeMilliganShouldReturnStoryTypeName()
+        //    {
+        //        var controller = new HomeController();
 
-            ViewResult result = controller.Index() as ViewResult;
+        //        var result = controller.Index() as ViewResult;
+        //        var model = result.Model as IEnumerable<Story>;
 
-            IEnumerable<Story> model = result.Model as IEnumerable<Story>;
+        //        Assert.AreEqual(2, model.Count());
+        //        var first = model.FirstOrDefault();
+        //        Assert.IsNotNull(first.StoryType.Name);
+        //    }
+        //}
 
-            Assert.AreEqual(3, model.Count());
-        }
+        // Unit test as injecting in a fake repository
+        //[TestMethod]
+        //public void Index_GivenAFakeRepository_ShouldReturnAListOfAllStories()
+        //{
+        //    var storyRepository = Mock.Create<IStoryRepository>();
+        //    Mock.Arrange(() => storyRepository.GetAllStories())
+        //        .Returns(new List<Story>()
+        //        {
+        //            new Story { StoryID=1, Title="title1", Content="content1"},
+        //            new Story { StoryID=2, Title="title2", Content="content2"}
+        //        })
+        //        .MustBeCalled();
 
-        [TestMethod]
-        public void Index__FirstStorySpikeMilliganShouldReturnStoryTypeName()
-        {
-            HomeController controller = new HomeController();
+        //    // Act
+        //    HomeController controller = new HomeController(storyRepository);
+        //    ViewResult result = controller.Index() as ViewResult;
+        //    IEnumerable<Story> model = result.Model as IEnumerable<Story>;
 
-            ViewResult result = controller.Index() as ViewResult;
-            IEnumerable<Story> model = result.Model as IEnumerable<Story>;
-
-            Assert.AreEqual(3, model.Count());
-            var first = model.FirstOrDefault();
-            Assert.IsNotNull(first.StoryType.Name);
-        }
+        //    Assert.AreEqual(2, model.Count());
     }
-
-    // Unit test as injecting in a fake repository
-    //[TestMethod]
-    //public void Index_GivenAFakeRepository_ShouldReturnAListOfAllStories()
-    //{
-    //    var storyRepository = Mock.Create<IStoryRepository>();
-    //    Mock.Arrange(() => storyRepository.GetAllStories())
-    //        .Returns(new List<Story>()
-    //        {
-    //            new Story { StoryID=1, Title="title1", Content="content1"},
-    //            new Story { StoryID=2, Title="title2", Content="content2"}
-    //        })
-    //        .MustBeCalled();
-
-    //    // Act
-    //    HomeController controller = new HomeController(storyRepository);
-    //    ViewResult result = controller.Index() as ViewResult;
-    //    IEnumerable<Story> model = result.Model as IEnumerable<Story>;
-
-    //    Assert.AreEqual(2, model.Count());
-    //}
 }
