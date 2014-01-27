@@ -109,8 +109,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseTransactionalTestClass.cs" />
+    <Compile Include="Controllers\FakeLogger.cs" />
     <Compile Include="Controllers\StoryControllerTests.cs" />
     <Compile Include="Fakes\FakeWinterDb.cs" />
+    <Compile Include="Logger\LoggerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Repository\StoryRepositoryTests.cs" />

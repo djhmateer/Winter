@@ -11,9 +11,10 @@ namespace Winter.Web.Controllers
         readonly IWinterDb db;
 
         // Unity knows that if IWinterDb interface is asked for, it will inject in a new WinterDb()
-        public HomeController(IWinterDb db)
+        public HomeController(IWinterDb db, ILogger log)
         {
             this.db = db;
+            log.Log("In Home Controller ctor");
         }
 
         public ActionResult Index()
